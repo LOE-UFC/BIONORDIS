@@ -1,0 +1,204 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import { getFilterOptions, getMoleculasPaginadas } from '@/lib/db'; // Importe a nova função aqui
+import Search from '@/components/Search';
+import AdvancedFilter from '@/components/AdvancedFilter';
+import ResultsHeader from '@/components/ResultsHeader';
+import Pagination from '@/components/Pagination'; // Importe o componente de paginação
+
+// --- ÍCONES ---
+const UserIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-slate-700"><path fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clipRule="evenodd" /></svg>
+);
+
+// --- TIPOS ---
+// (Nota: A tipagem de retorno do banco geralmente vem como 'any' do driver pg, 
+// mas mantemos a interface para segurança no frontend)
+interface Molecula {
+  id: number;
+  nome: string;
+  smiles: string | null;
+  nome_cientifico: string | null;
+  familia: string | null;
+  bioma: string | null;
+  classe: string | null;
+}
+
+export default async function Home(props: {
+  searchParams: Promise<{ 
+    q?: string; 
+    familia?: string; 
+    bioma?: string;
+    classe?: string;
+    subclasse?: string;
+    instituicao?: string;
+    biodiversidade?: string;
+    page?: string; // <--- Novo parâmetro de página
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+  
+  // 1. Captura os Filtros em um objeto limpo
+  const filtros = {
+    q: searchParams.q || '',
+    familia: searchParams.familia || '',
+    bioma: searchParams.bioma || '',
+    classe: searchParams.classe || '',
+    subclasse: searchParams.subclasse || '',
+    instituicao: searchParams.instituicao || '',
+    biodiversidade: searchParams.biodiversidade || '',
+  };
+
+  // 2. Captura a Página Atual (Se não tiver, assume 1)
+  const paginaAtual = Number(searchParams.page) || 1;
+  const itensPorPagina = 20;
+  
+  // Verifica se existe ALGUMA busca ativa
+  const isSearching = Object.values(filtros).some(valor => valor !== '');
+
+  // 3. Busca as listas de opções para os dropdowns
+  const opcoesFiltros = await getFilterOptions();
+
+  // 4. Executa a Busca Paginada (Substituindo o SQL manual anterior)
+  let resultado: { moleculas: Molecula[]; total: number; paginas: number } = { 
+    moleculas: [], 
+    total: 0, 
+    paginas: 0 
+};
+
+  if (isSearching) {
+    // Chama a função inteligente do lib/db.ts
+    resultado = await getMoleculasPaginadas(filtros, paginaAtual, itensPorPagina);
+  }
+
+  return (
+    <div className="min-h-screen bg-white font-sans text-slate-800 flex flex-col">
+      
+      {/* HEADER FIXO */}
+      <header className="border-b border-slate-100 py-4 sticky top-0 bg-white/80 backdrop-blur-md z-50">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-8 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="relative w-10 h-10">
+              <Image 
+                src="/logo.jpg" 
+                alt="Bionordis Logo" 
+                fill 
+                className="object-contain rounded-lg" 
+                priority
+              />
+            </div>
+            <div>
+              <h1 className="text-xl font-extrabold text-slate-800 tracking-wide uppercase leading-none">BIONORDIS</h1>
+              <p className="text-[10px] text-slate-400 font-medium">Banco de Moléculas do Nordeste</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-6">
+             <nav className="hidden md:flex gap-6 text-sm font-medium text-slate-600">
+              <Link href="#" className="hover:text-emerald-600">About</Link>
+              <Link href="#" className="hover:text-emerald-600">Team</Link>
+              <Link href="#" className="hover:text-emerald-600">Contact</Link>
+              <Link href="#" className="hover:text-emerald-600">How to Cite</Link>
+            </nav>
+            <button className="p-1 rounded-full hover:bg-slate-100"><UserIcon /></button>
+          </div>
+        </div>
+      </header>
+
+      <main className="flex-1 w-full max-w-[1440px] mx-auto px-6 py-10">
+        
+        {/* --- ESTADO 1: SEM BUSCA (LANDING PAGE) --- */}
+        {!isSearching ? (
+          <div className="max-w-4xl mx-auto py-10 animate-in fade-in duration-500">
+            {/* Search All */}
+            <div className="text-center mb-10 px-4">
+              <h2 className="text-slate-500 font-medium mb-6">Search All</h2>
+               {/* O componente Search já tem a sombra interna, removemos a div extra */}
+                <Search />
+            </div>
+
+            {/* Divisor "OR" */}
+            <div className="flex items-center justify-center gap-4 my-10">
+              <div className="h-[1px] bg-slate-200 w-full max-w-[100px]"></div>
+              <span className="text-slate-400 text-sm font-medium uppercase">Or</span>
+              <div className="h-[1px] bg-slate-200 w-full max-w-[100px]"></div>
+            </div>
+
+            {/* Filtros Abertos */}
+            <AdvancedFilter 
+              opcoesFamilias={opcoesFiltros.familias} 
+              opcoesBiomas={opcoesFiltros.biomas} 
+              opcoesClasse={opcoesFiltros.classes}        
+              opcoesSubclasse={opcoesFiltros.subclasses}  
+              opcoesInstituicao={opcoesFiltros.instituicoes}
+              opcoesBiodiversidade={opcoesFiltros.biodiversidades} 
+            />
+          </div>
+        ) : (
+          /* --- ESTADO 2: COM RESULTADOS (RESULT PAGE) --- */
+          <div className="animate-in slide-in-from-bottom-4 duration-500">
+            
+            {/* Header de Resultados + Accordion de Filtro */}
+            <ResultsHeader 
+              total={resultado.total} // Usa o total real vindo do count(*) do banco
+              opcoesFamilias={opcoesFiltros.familias}
+              opcoesBiomas={opcoesFiltros.biomas}
+              opcoesClasses={opcoesFiltros.classes}        
+              opcoesSubclasses={opcoesFiltros.subclasses}  
+              opcoesInstituicoes={opcoesFiltros.instituicoes}
+              opcoesBiodiversidade={opcoesFiltros.biodiversidades}
+            />
+
+            {/* Grid de Cards */}
+            {resultado.moleculas.length === 0 ? (
+               <div className="text-center py-20 bg-slate-50 rounded-2xl border border-dashed border-slate-200 mt-6">
+                 <p className="text-slate-500 text-lg">
+                    {paginaAtual > 1 
+                      ? `Nenhum resultado na página ${paginaAtual}.` 
+                      : 'Nenhum resultado encontrado para essa busca.'}
+                 </p>
+                 <Link href="/" className="text-emerald-600 font-bold hover:underline mt-2 inline-block">Limpar filtros</Link>
+               </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
+                  {resultado.moleculas.map((mol: any) => (
+                    <Link href={`/molecula/${mol.id}`} key={mol.id} className="block group h-full">
+                      <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-5 hover:shadow-lg hover:border-emerald-100 transition-all h-full hover:-translate-y-1 cursor-pointer">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 shadow-inner
+                            ${mol.smiles ? 'bg-blue-50 text-blue-500' : 'bg-green-50 text-green-500'}`}>
+                            {mol.smiles ? '⚗️' : '🌿'}
+                          </div>
+                          <div className="min-w-0">
+                            <h4 className="font-bold text-slate-800 truncate text-base group-hover:text-emerald-700 transition-colors">{mol.nome}</h4>
+                            <p className="text-xs text-slate-500 italic truncate">{mol.nome_cientifico || 'Espécie não informada'}</p>
+                          </div>
+                        </div>
+                        <div className="text-xs text-slate-500 space-y-2 pt-3 border-t border-slate-50">
+                           <div className="flex justify-between">
+                              <span>Família</span>
+                              <span className="font-medium text-slate-700 bg-slate-100 px-2 py-0.5 rounded truncate max-w-[120px]">{mol.familia || '-'}</span>
+                           </div>
+                           <div className="flex justify-between">
+                              <span>Bioma</span>
+                              <span className="font-medium text-slate-700 bg-slate-100 px-2 py-0.5 rounded truncate max-w-[120px]">{mol.bioma || '-'}</span>
+                           </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+
+                {/* --- COMPONENTE DE PAGINAÇÃO --- */}
+                <Pagination 
+                  paginaAtual={paginaAtual} 
+                  totalPaginas={resultado.paginas} 
+                />
+              </>
+            )}
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
