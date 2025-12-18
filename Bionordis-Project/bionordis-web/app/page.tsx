@@ -1,19 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getFilterOptions, getMoleculasPaginadas } from '@/lib/db'; // Importe a nova função aqui
+import { getFilterOptions, getMoleculasPaginadas } from '@/lib/db'; 
 import Search from '@/components/Search';
 import AdvancedFilter from '@/components/AdvancedFilter';
 import ResultsHeader from '@/components/ResultsHeader';
-import Pagination from '@/components/Pagination'; // Importe o componente de paginação
+import Pagination from '@/components/Pagination';
 
-// --- ÍCONES ---
 const UserIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-slate-700"><path fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clipRule="evenodd" /></svg>
 );
 
-// --- TIPOS ---
-// (Nota: A tipagem de retorno do banco geralmente vem como 'any' do driver pg, 
-// mas mantemos a interface para segurança no frontend)
 interface Molecula {
   id: number;
   nome: string;
@@ -33,12 +29,11 @@ export default async function Home(props: {
     subclasse?: string;
     instituicao?: string;
     biodiversidade?: string;
-    page?: string; // <--- Novo parâmetro de página
+    page?: string; 
   }>;
 }) {
   const searchParams = await props.searchParams;
   
-  // 1. Captura os Filtros em um objeto limpo
   const filtros = {
     q: searchParams.q || '',
     familia: searchParams.familia || '',
@@ -49,17 +44,13 @@ export default async function Home(props: {
     biodiversidade: searchParams.biodiversidade || '',
   };
 
-  // 2. Captura a Página Atual (Se não tiver, assume 1)
   const paginaAtual = Number(searchParams.page) || 1;
   const itensPorPagina = 20;
   
-  // Verifica se existe ALGUMA busca ativa
   const isSearching = Object.values(filtros).some(valor => valor !== '');
 
-  // 3. Busca as listas de opções para os dropdowns
   const opcoesFiltros = await getFilterOptions();
 
-  // 4. Executa a Busca Paginada (Substituindo o SQL manual anterior)
   let resultado: { moleculas: Molecula[]; total: number; paginas: number } = { 
     moleculas: [], 
     total: 0, 
@@ -67,42 +58,40 @@ export default async function Home(props: {
 };
 
   if (isSearching) {
-    // Chama a função inteligente do lib/db.ts
     resultado = await getMoleculasPaginadas(filtros, paginaAtual, itensPorPagina);
   }
 
   return (
     <div className="min-h-screen bg-white font-sans text-slate-800 flex flex-col">
       
-      {/* HEADER FIXO */}
-      <header className="border-b border-slate-100 py-4 sticky top-0 bg-white/80 backdrop-blur-md z-50">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-8 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10">
-              <Image 
-                src="/logo.jpg" 
-                alt="Bionordis Logo" 
-                fill 
-                className="object-contain rounded-lg" 
-                priority
-              />
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold text-slate-800 tracking-wide uppercase leading-none">BIONORDIS</h1>
-              <p className="text-[10px] text-slate-400 font-medium">Banco de Moléculas do Nordeste</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-6">
-             <nav className="hidden md:flex gap-6 text-sm font-medium text-slate-600">
-              <Link href="#" className="hover:text-emerald-600">About</Link>
-              <Link href="#" className="hover:text-emerald-600">Team</Link>
-              <Link href="#" className="hover:text-emerald-600">Contact</Link>
-              <Link href="#" className="hover:text-emerald-600">How to Cite</Link>
-            </nav>
-            <button className="p-1 rounded-full hover:bg-slate-100"><UserIcon /></button>
-          </div>
-        </div>
-      </header>
+{/* HEADER FIXO */}
+<header className="border-b border-slate-100 py-4 sticky top-0 bg-white/80 backdrop-blur-md z-50">
+  <div className="max-w-[1440px] mx-auto px-6 md:px-8 flex items-center justify-between">
+    
+    <div className="flex items-center gap-3">
+      <Link href="/">
+        <Image
+          src="/BIONORDIS-LOGO/2.png"
+          alt="Bionordis Logo"
+          width={1280}
+          height={376}
+          className="h-12 w-auto md:h-16 object-contain cursor-pointer" // Adicionei cursor-pointer
+          priority
+        />
+      </Link>
+    </div>
+    
+    <div className="flex items-center gap-6">
+      <nav className="hidden md:flex gap-6 text-sm font-medium text-slate-600">
+        <Link href="#" className="hover:text-emerald-600">About</Link>
+        <Link href="#" className="hover:text-emerald-600">Team</Link>
+        <Link href="#" className="hover:text-emerald-600">Contact</Link>
+        <Link href="#" className="hover:text-emerald-600">How to Cite</Link>
+      </nav>
+      <button className="p-1 rounded-full hover:bg-slate-100"><UserIcon /></button>
+    </div>
+  </div>
+</header>
 
       <main className="flex-1 w-full max-w-[1440px] mx-auto px-6 py-10">
         
