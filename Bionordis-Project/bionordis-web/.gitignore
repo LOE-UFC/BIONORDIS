@@ -1,12 +1,9 @@
-# Dependências (muito pesado, não suba)
 node_modules/
 
-# Build do Next.js
 .next/
 out/
 build/
 
-# SEGURANÇA (Obrigatório)
 .env
 .env.local
 .env.development.local
@@ -14,9 +11,10 @@ build/
 .env.production.local
 *.pem
 
-# Logs e arquivos de sistema
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .DS_Store
 .vercel
+
+gerarHash.js

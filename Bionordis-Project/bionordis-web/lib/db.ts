@@ -1,4 +1,5 @@
 import { Pool } from '@neondatabase/serverless';
+import { sql } from '@vercel/postgres';
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -50,10 +51,8 @@ export async function getMoleculasPaginadas(
   const params: any[] = [];
   let counter = 1;
   
-  // Base das Queries
   let whereClause = ` WHERE 1=1`;
 
-  // --- RECONSTRUÇÃO DOS FILTROS (Igual ao que você já tinha) ---
   if (filtros.q) {
     whereClause += ` AND (
       nome ILIKE $${counter} OR 
@@ -74,7 +73,6 @@ export async function getMoleculasPaginadas(
   if (filtros.instituicao) { whereClause += ` AND instituicao = $${counter}`; params.push(filtros.instituicao); counter++; }
   if (filtros.biodiversidade) { whereClause += ` AND biodiversidade = $${counter}`; params.push(filtros.biodiversidade); counter++; }
 
-  // --- QUERY 1: BUSCAR DADOS (COM LIMIT E OFFSET) ---
   const sqlDados = `
     SELECT * FROM moleculas 
     ${whereClause} 
@@ -82,11 +80,8 @@ export async function getMoleculasPaginadas(
     LIMIT ${limite} OFFSET ${offset}
   `;
   
-  // --- QUERY 2: CONTAR TOTAL (SEM LIMIT) ---
-  // Isso é leve pois o Postgres otimiza o count
   const sqlCount = `SELECT count(*) as total FROM moleculas ${whereClause}`;
 
-  // Executa as duas em paralelo para ser rápido
   const [dadosRes, countRes] = await Promise.all([
     query(sqlDados, params),
     query(sqlCount, params)
@@ -97,4 +92,17 @@ export async function getMoleculasPaginadas(
     total: parseInt(countRes.rows[0].total || '0'),
     paginas: Math.ceil(parseInt(countRes.rows[0].total || '0') / limite)
   };
+}
+
+export async function getMoleculaById(id: string) {
+  try {
+    const result = await sql`
+      SELECT * FROM moleculas WHERE id = ${id}
+    `;
+    
+    return result.rows[0];
+  } catch (error) {
+    console.error('Erro ao buscar molécula:', error);
+    return null;
+  }
 }

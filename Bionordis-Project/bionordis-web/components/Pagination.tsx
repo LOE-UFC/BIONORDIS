@@ -11,7 +11,6 @@ interface Props {
 export default function Pagination({ paginaAtual, totalPaginas }: Props) {
   const searchParams = useSearchParams();
 
-  // Função para gerar o link mantendo os filtros atuais
   const criarLink = (novaPagina: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', novaPagina.toString());
@@ -22,7 +21,6 @@ export default function Pagination({ paginaAtual, totalPaginas }: Props) {
 
   return (
     <div className="flex justify-center items-center gap-4 mt-12 mb-8 animate-in fade-in slide-in-from-bottom-4">
-      {/* Botão Anterior */}
       {paginaAtual > 1 ? (
         <Link 
           href={criarLink(paginaAtual - 1)}
@@ -40,7 +38,6 @@ export default function Pagination({ paginaAtual, totalPaginas }: Props) {
         Page <span className="text-emerald-600">{paginaAtual}</span> of {totalPaginas}
       </span>
 
-      {/* Botão Próximo */}
       {paginaAtual < totalPaginas ? (
         <Link 
           href={criarLink(paginaAtual + 1)}

@@ -17,7 +17,6 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // 1. ESTADO: Inicializa com o valor da URL ou vazio
   const [familia, setFamilia] = useState(searchParams.get('familia') || '');
   const [bioma, setBioma] = useState(searchParams.get('bioma') || '');
   const [classe, setClasse] = useState(searchParams.get('classe') || '');
@@ -25,9 +24,27 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
   const [instituicao, setInstituicao] = useState(searchParams.get('instituicao') || '');
   const [biodiversidade, setBiodiversidade] = useState(searchParams.get('biodiversidade') || '');
 
-  // --- Função Principal de Pesquisa ---
+  // --- NOVA FUNÇÃO: VER TODAS ---
+  const handleSearchAll = () => {
+    // 1. Limpa os estados visuais dos selects
+    setFamilia('');
+    setBioma('');
+    setClasse('');
+    setSubclasse('');
+    setInstituicao('');
+    setBiodiversidade('');
+
+    // 2. Força a navegação para mostrar tudo
+    router.push('/?browse=true');
+    
+    if (onSearch) onSearch();
+  };
+
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams.toString());
+
+    // Remove o 'browse' se o usuário estiver fazendo um filtro específico
+    params.delete('browse');
 
     const atualizarFiltro = (chave: string, valor: string) => {
       if (valor) {
@@ -37,7 +54,6 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
       }
     };
 
-    // 2. APLICAÇÃO DOS FILTROS
     atualizarFiltro('familia', familia);
     atualizarFiltro('bioma', bioma);
     atualizarFiltro('classe', classe);
@@ -45,7 +61,14 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
     atualizarFiltro('instituicao', instituicao);
     atualizarFiltro('biodiversidade', biodiversidade);
 
-    // 3. NAVEGAÇÃO
+    // Se nenhum filtro foi selecionado, aplicamos o 'browse=true' automaticamente
+    // para não ficar na tela inicial vazia
+    const temFiltroAtivo = [familia, bioma, classe, subclasse, instituicao, biodiversidade].some(v => v !== '');
+    
+    if (!temFiltroAtivo) {
+        params.set('browse', 'true');
+    }
+
     router.push(`/?${params.toString()}`);
     
     if (onSearch) {
@@ -56,13 +79,11 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
   return (
     <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 w-full shadow-sm">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-slate-700 font-bold text-lg">AdvancedFilters</h3>
+        <h3 className="text-slate-700 font-bold text-lg">Advanced Filters</h3>
       </div>
       
-      {/* GRID DE INPUTS */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         
-        {/* Input: Família */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-slate-500">Botanic Family</label>
           <select 
@@ -77,7 +98,6 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
           </select>
         </div>
 
-        {/* Input: Bioma */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-slate-500">Biome</label>
           <select 
@@ -92,12 +112,11 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
           </select>
         </div>
 
-        {/* Input: Classe */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-slate-500">Class</label>
           <select 
             className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
-            value={bioma}
+            value={classe} // CORREÇÃO: Estava 'bioma' aqui antes
             onChange={(e) => setClasse(e.target.value)}
           >
             <option value="">All</option>
@@ -106,7 +125,7 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
             ))}
           </select>
         </div>
-        {/* Input: Subclasse */}
+        
         <div className="space-y-2">
           <label className="text-sm font-semibold text-slate-500">Subclass</label>
           <select 
@@ -119,7 +138,6 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
           </select>
         </div>
 
-        {/* Input: Instituição */}
         <div className="space-y-2">
           <label className="text-sm font-semibold text-slate-500">Institution / Laboratory</label>
           <select 
@@ -132,9 +150,8 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
           </select>
         </div>
 
-        {/* Input: Biodiversidade */}
         <div className="space-y-2 md:col-span-2">
-          <label className="text-sm font-semibold text-slate-500">Biodiversity (Type/)</label>
+          <label className="text-sm font-semibold text-slate-500">Biodiversity (Type)</label>
           <select 
             className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
             value={biodiversidade}
@@ -146,17 +163,28 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
         </div>
       </div>
       
-      {/* BOTÃO DE AÇÃO */}
-      <div className="flex justify-center md:justify-end border-t border-slate-200 pt-6">
+      {/* BOTÕES DE AÇÃO */}
+      <div className="flex flex-col md:flex-row gap-4 justify-end border-t border-slate-200 pt-6">
+        
+        {/* BOTÃO 1: VER TODAS (NOVO) */}
+        <button 
+          onClick={handleSearchAll}
+          className="bg-white border border-slate-300 hover:bg-slate-50 text-slate-600 font-bold py-3 px-6 rounded-full transition-all shadow-sm flex items-center justify-center gap-2"
+        >
+          <span>Ver Todas</span>
+        </button>
+
+        {/* BOTÃO 2: APLICAR FILTROS */}
         <button 
           onClick={handleSearch}
-          className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2"
+          className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center justify-center gap-2"
         >
           <span>Aplicar Filtros</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
           </svg>
         </button>
+
       </div>
     </div>
   );
