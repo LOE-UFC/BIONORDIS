@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import Image from "next/image";
 import { getMoleculaById } from "@/lib/db";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -14,6 +15,11 @@ import {
   BookOpen,
   ExternalLink
 } from "lucide-react";
+
+
+const UserIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-slate-700"><path fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clipRule="evenodd" /></svg>
+);
 
 export default async function MoleculaDetails(props: { 
   params: Promise<{ id: string }> 
@@ -34,19 +40,55 @@ export default async function MoleculaDetails(props: {
     notFound();
   }
 
+  
   const atividadeBiologica = {
-    melhorIndicacao: "Breast Cancer (MDA-MB-435)",
-    ic50: "0.27 µg/mL",
+    melhorIndicacao: "Melanoma (B16)", 
+    ic50: "1.82 µg/mL",
     potencia: "High",
+    
     outrosTestes: [
-      { linhagem: "Prostate (PC-3)", valor: "0.32 µg/mL", nivel: "High" },
-      { linhagem: "Leukemia (HL-60)", valor: "1.27 µg/mL", nivel: "Moderate" },
-      { linhagem: "Colon (HCT-8)", valor: "1.59 µg/mL", nivel: "Moderate" },
+      { linhagem: "Fibrosarcoma (L929)", valor: "3.89 µg/mL", nivel: "High" },
+      { linhagem: "Leukemia (HL-60)", valor: "4.23 µg/mL", nivel: "Moderate" },
+      { linhagem: "Colon (U138)", valor: "6.06 µg/mL", nivel: "Moderate" },
     ]
   };
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] pb-20">
+
+              {/* --- HEADER --- */}
+      <header className="border-b border-slate-100 py-4 sticky top-0 bg-white/80 backdrop-blur-md z-50">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-8 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Link href="/">
+              <Image
+                src="/BIONORDIS-LOGO/2.png"
+                alt="Bionordis Logo"
+                width={1280}
+                height={376}
+                className="h-12 w-auto md:h-16 object-contain cursor-pointer"
+                priority
+              />
+            </Link>
+          </div>
+          <div className="flex items-center gap-6">
+            <nav className="hidden md:flex gap-6 text-sm font-medium text-slate-600">
+              <Link href="/about" className="text-emerald-600 font-bold">About</Link>
+              <Link href="#" className="hover:text-emerald-600 transition-colors">Team</Link>
+              <Link href="/contact" className="hover:text-emerald-600 transition-colors">Contact</Link>
+              <Link href="#" className="hover:text-emerald-600 transition-colors">How to Cite</Link>
+            </nav>
+            <Link 
+                href={session?.user ? "/profile" : "/login"} 
+                className={`p-2 rounded-full transition-colors ${
+                  session?.user ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-200" : "hover:bg-slate-100 text-slate-600"
+                }`}
+            >
+                <UserIcon />
+            </Link>
+          </div>
+        </div>
+      </header>
       
       <div className="bg-white border-b border-slate-200 sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">

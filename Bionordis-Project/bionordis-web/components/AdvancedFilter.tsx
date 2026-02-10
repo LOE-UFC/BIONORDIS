@@ -171,7 +171,7 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
           onClick={handleSearchAll}
           className="bg-white border border-slate-300 hover:bg-slate-50 text-slate-600 font-bold py-3 px-6 rounded-full transition-all shadow-sm flex items-center justify-center gap-2"
         >
-          <span>Ver Todas</span>
+          <span>See all</span>
         </button>
 
         {/* BOTÃO 2: APLICAR FILTROS */}
@@ -179,7 +179,7 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
           onClick={handleSearch}
           className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center justify-center gap-2"
         >
-          <span>Aplicar Filtros</span>
+          <span>Apply filters</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
           </svg>
