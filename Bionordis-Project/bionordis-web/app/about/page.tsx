@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Globe, Dna, Network, Building2, FlaskConical, Users } from "lucide-react";
 
-// Ícone de Usuário (Padrão do Sistema)
 const UserIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-slate-700"><path fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clipRule="evenodd" /></svg>
 );
@@ -14,7 +13,6 @@ export default async function AboutPage() {
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-800 flex flex-col">
       
-      {/* --- HEADER --- */}
       <header className="border-b border-slate-100 py-4 sticky top-0 bg-white/80 backdrop-blur-md z-50">
         <div className="max-w-[1440px] mx-auto px-6 md:px-8 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -48,10 +46,8 @@ export default async function AboutPage() {
         </div>
       </header>
 
-      {/* --- MAIN CONTENT --- */}
       <main className="flex-1 w-full max-w-4xl mx-auto px-6 py-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
         
-        {/* HERO SECTION */}
         <section className="mb-16 space-y-6 text-center">
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
                 Translational Biodiscovery <br/>
@@ -64,7 +60,6 @@ export default async function AboutPage() {
 
         <div className="space-y-16">
             
-            {/* INCT T-BIO2 DESCRIPTION */}
             <div className="bg-white p-8 rounded-3xl border border-emerald-100 shadow-sm space-y-6">
                 <div className="flex items-center gap-3">
                     <Network className="text-emerald-600" size={32} />
@@ -80,7 +75,6 @@ export default async function AboutPage() {
                 </div>
             </div>
 
-            {/* TECHNOLOGIES & INNOVATION */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-4">
                     <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
@@ -126,7 +120,6 @@ export default async function AboutPage() {
 
             <hr className="border-slate-200" />
 
-            {/* LOE & LEADERSHIP */}
             <div className="flex flex-col md:flex-row gap-8 items-center">
                 <div className="md:w-1/3 text-center md:text-left">
                     <div className="bg-emerald-50 inline-flex p-4 rounded-2xl text-emerald-700 mb-4">
@@ -146,7 +139,6 @@ export default async function AboutPage() {
                 </div>
             </div>
 
-            {/* PARTNERS LOGOS (PLACEHOLDERS) */}
             <div className="pt-8">
                 <p className="text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Strategic Partners</p>
                 <div className="flex flex-wrap justify-center gap-6 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">

@@ -1,11 +1,8 @@
 import Link from "next/link";
-import Image from "next/image"; // <--- Importante
+import Image from "next/image"; 
 import { Github, Mail, MapPin } from "lucide-react";
 
-export function Footer() { // <--- Mantendo export nomeado que funcionou
-  
-  // Lista de Parceiros 
-  // O campo 'file' deve bater com o nome do arquivo na pasta public/logos
+export function Footer() { 
   const partners = [
     { name: "UFC", file: "Logo-UFC.png", url: "https://www.ufc.br", label: "Univ. Federal do Ceará" },
     { name: "INCT Bio", file: "Logo-INCT.png", url: "https://www.inct.cnpq.br/", label: "INCT Bio2" },
@@ -18,13 +15,10 @@ export function Footer() { // <--- Mantendo export nomeado que funcionou
     <footer className="bg-slate-900 text-slate-300 border-t border-slate-800">
       <div className="max-w-[1440px] mx-auto px-6 py-12 md:py-16">
         
-        {/* --- SEÇÃO SUPERIOR --- */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           
-          {/* Coluna 1: Sobre */}
           <div className="md:col-span-2 space-y-4">
-            <h2 className="text-2xl font-bold text-white tracking-tight">BIONORDIS</h2>
-            <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
+            {/* <h2 className="text-2xl font-bold text-white tracking-tight">BIONORDIS</h2> */}<p className="text-slate-400 text-sm leading-relaxed max-w-sm">
               A digital repository bridging the gap between biodiversity and drug discovery. 
               Developed at the Experimental Oncology Laboratory (LOE/UFC).
             </p>
@@ -38,7 +32,6 @@ export function Footer() { // <--- Mantendo export nomeado que funcionou
             </div>
           </div>
 
-          {/* Coluna 2: Links */}
           <div>
             <h3 className="font-bold text-white mb-4">Quick Links</h3>
             <ul className="space-y-3 text-sm">
@@ -49,7 +42,6 @@ export function Footer() { // <--- Mantendo export nomeado que funcionou
             </ul>
           </div>
 
-          {/* Coluna 3: Endereço */}
           <div>
             <h3 className="font-bold text-white mb-4">Location</h3>
             <ul className="space-y-3 text-sm text-slate-400">
@@ -64,7 +56,6 @@ export function Footer() { // <--- Mantendo export nomeado que funcionou
           </div>
         </div>
 
-        {/* --- SEÇÃO DE LOGOS (PARCEIROS) --- */}
         <div className="border-t border-slate-800 pt-10 pb-6">
             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest text-center mb-8">
                 Institutional Partners & Support
@@ -79,9 +70,8 @@ export function Footer() { // <--- Mantendo export nomeado que funcionou
                         rel="noopener noreferrer"
                         className="group flex flex-col items-center gap-3 transition-all hover:-translate-y-1"
                     >
-                        {/* Container Branco da Logo */}
+        
                         <div className="h-16 w-32 bg-white rounded-lg flex items-center justify-center p-2 shadow-sm opacity-80 group-hover:opacity-100 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all duration-300">
-                           {/* LOGO REAL */}
                            <Image 
                              src={`/logos/${partner.file}`} 
                              alt={partner.name}
@@ -99,14 +89,13 @@ export function Footer() { // <--- Mantendo export nomeado que funcionou
             </div>
         </div>
 
-        {/* --- RODAPÉ --- */}
-        <div className="border-t border-slate-800 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+        {/* <div className="border-t border-slate-800 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
           <p>© {new Date().getFullYear()} Bionordis / UFC. All rights reserved.</p>
           <div className="flex gap-4 mt-4 md:mt-0">
             <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="#" className="hover:text-white transition-colors">Terms of Use</Link>
           </div>
-        </div>
+        </div> */}
 
       </div>
     </footer>

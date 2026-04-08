@@ -74,7 +74,7 @@ export default async function Home(props: {
           <div className="flex items-center gap-3">
             <Link href="/">
               <Image
-                src="/BIONORDIS-LOGO/2.png"
+                src="/logos/Logo-LOE.jpeg"
                 alt="Bionordis Logo"
                 width={1280}
                 height={376}

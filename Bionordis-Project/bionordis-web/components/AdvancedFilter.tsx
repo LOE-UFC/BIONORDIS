@@ -24,9 +24,7 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
   const [instituicao, setInstituicao] = useState(searchParams.get('instituicao') || '');
   const [biodiversidade, setBiodiversidade] = useState(searchParams.get('biodiversidade') || '');
 
-  // --- NOVA FUNÇÃO: VER TODAS ---
   const handleSearchAll = () => {
-    // 1. Limpa os estados visuais dos selects
     setFamilia('');
     setBioma('');
     setClasse('');
@@ -34,7 +32,6 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
     setInstituicao('');
     setBiodiversidade('');
 
-    // 2. Força a navegação para mostrar tudo
     router.push('/?browse=true');
     
     if (onSearch) onSearch();
@@ -43,7 +40,6 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams.toString());
 
-    // Remove o 'browse' se o usuário estiver fazendo um filtro específico
     params.delete('browse');
 
     const atualizarFiltro = (chave: string, valor: string) => {
@@ -61,8 +57,6 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
     atualizarFiltro('instituicao', instituicao);
     atualizarFiltro('biodiversidade', biodiversidade);
 
-    // Se nenhum filtro foi selecionado, aplicamos o 'browse=true' automaticamente
-    // para não ficar na tela inicial vazia
     const temFiltroAtivo = [familia, bioma, classe, subclasse, instituicao, biodiversidade].some(v => v !== '');
     
     if (!temFiltroAtivo) {
@@ -116,7 +110,7 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
           <label className="text-sm font-semibold text-slate-500">Class</label>
           <select 
             className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
-            value={classe} // CORREÇÃO: Estava 'bioma' aqui antes
+            value={classe}
             onChange={(e) => setClasse(e.target.value)}
           >
             <option value="">All</option>
@@ -163,10 +157,8 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
         </div>
       </div>
       
-      {/* BOTÕES DE AÇÃO */}
       <div className="flex flex-col md:flex-row gap-4 justify-end border-t border-slate-200 pt-6">
         
-        {/* BOTÃO 1: VER TODAS (NOVO) */}
         <button 
           onClick={handleSearchAll}
           className="bg-white border border-slate-300 hover:bg-slate-50 text-slate-600 font-bold py-3 px-6 rounded-full transition-all shadow-sm flex items-center justify-center gap-2"
@@ -174,7 +166,6 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
           <span>See all</span>
         </button>
 
-        {/* BOTÃO 2: APLICAR FILTROS */}
         <button 
           onClick={handleSearch}
           className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center justify-center gap-2"

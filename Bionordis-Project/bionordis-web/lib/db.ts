@@ -1,9 +1,9 @@
 import { Pool } from '@neondatabase/serverless';
-import { sql } from '@vercel/postgres';
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
+
 
 export const query = (text: string, params?: any[]) => pool.query(text, params);
 
@@ -57,15 +57,21 @@ export async function getMoleculasPaginadas(
     whereClause += ` AND (
       nome ILIKE $${counter} OR 
       nome_cientifico ILIKE $${counter} OR 
+      nome_iupac ILIKE $${counter} OR
+      codigo ILIKE $${counter} OR
       familia ILIKE $${counter} OR 
       bioma ILIKE $${counter} OR
       classe ILIKE $${counter} OR
       subclasse ILIKE $${counter} OR
-      biodiversidade ILIKE $${counter}
+      biodiversidade ILIKE $${counter} OR
+      propriedades_bio ILIKE $${counter} OR
+      atividades ILIKE $${counter} OR
+      parte_planta ILIKE $${counter}
     )`;
     params.push(`%${filtros.q}%`);
     counter++;
   }
+
   if (filtros.familia) { whereClause += ` AND familia = $${counter}`; params.push(filtros.familia); counter++; }
   if (filtros.bioma) { whereClause += ` AND bioma = $${counter}`; params.push(filtros.bioma); counter++; }
   if (filtros.classe) { whereClause += ` AND classe = $${counter}`; params.push(filtros.classe); counter++; }
@@ -96,9 +102,10 @@ export async function getMoleculasPaginadas(
 
 export async function getMoleculaById(id: string) {
   try {
-    const result = await sql`
-      SELECT * FROM moleculas WHERE id = ${id}
-    `;
+    const result = await query(
+      'SELECT * FROM moleculas WHERE id = $1',
+      [id]
+    );
     
     return result.rows[0];
   } catch (error) {

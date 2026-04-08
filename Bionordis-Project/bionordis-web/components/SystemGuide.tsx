@@ -6,31 +6,25 @@ import { HelpCircle, Search, FlaskConical, Database, X, ArrowRight } from "lucid
 export default function SystemGuide() {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Efeito que roda apenas 1 vez quando a tela carrega
   useEffect(() => {
-    // Verifica se já existe a marcação no navegador
     const hasSeenTutorial = localStorage.getItem("bionordis_tutorial_seen");
 
-    // Se NÃO tiver visto, abre o modal automaticamente
     if (!hasSeenTutorial) {
       setIsOpen(true);
     }
   }, []);
 
-  // Função para fechar e gravar que já viu
   const closeGuide = () => {
     setIsOpen(false);
     localStorage.setItem("bionordis_tutorial_seen", "true");
   };
 
-  // Função para abrir manualmente (clicando no botão)
   const openGuide = () => {
     setIsOpen(true);
   };
 
   return (
     <>
-      {/* --- BOTÃO DE ACIONAMENTO MANUAL --- */}
       <button 
         onClick={openGuide}
         className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-emerald-600 transition-colors bg-white/50 px-3 py-1.5 rounded-full border border-slate-200 hover:border-emerald-200"
@@ -39,13 +33,11 @@ export default function SystemGuide() {
         <span>How it works</span>
       </button>
 
-      {/* --- O MODAL (JANELA) --- */}
       {isOpen && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
           
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden animate-in zoom-in-95 duration-300 border border-slate-200">
             
-            {/* Cabeçalho */}
             <div className="bg-slate-50 px-8 py-6 border-b border-slate-100 flex justify-between items-center">
                 <div>
                     <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
@@ -62,10 +54,8 @@ export default function SystemGuide() {
                 </button>
             </div>
 
-            {/* Conteúdo (Grid de 3 Passos) */}
             <div className="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
                 
-                {/* Passo 1 */}
                 <div className="text-center space-y-3 group cursor-default">
                     <div className="w-16 h-16 mx-auto bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm group-hover:shadow-md">
                         <Search size={32} />
@@ -76,7 +66,6 @@ export default function SystemGuide() {
                     </p>
                 </div>
 
-                {/* Passo 2 */}
                 <div className="text-center space-y-3 group cursor-default">
                     <div className="w-16 h-16 mx-auto bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm group-hover:shadow-md">
                         <FlaskConical size={32} />
@@ -87,7 +76,6 @@ export default function SystemGuide() {
                     </p>
                 </div>
 
-                {/* Passo 3 */}
                 <div className="text-center space-y-3 group cursor-default">
                     <div className="w-16 h-16 mx-auto bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm group-hover:shadow-md">
                         <Database size={32} />
@@ -100,7 +88,6 @@ export default function SystemGuide() {
 
             </div>
 
-            {/* Rodapé */}
             <div className="bg-slate-50 px-8 py-4 border-t border-slate-100 flex justify-end">
                 <button 
                     onClick={closeGuide}

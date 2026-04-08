@@ -17,7 +17,7 @@ export default function LoginPage() {
           <Link href="/">
             <div className="relative w-48 h-12 cursor-pointer">
               <Image 
-                src="/BIONORDIS-LOGO/2.png" 
+                src="/logos/Logo-LOE.jpeg" 
                 alt="Bionordis Logo" 
                 width={1280}
                 height={376}
