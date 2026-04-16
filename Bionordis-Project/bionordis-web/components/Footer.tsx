@@ -7,26 +7,27 @@ export function Footer() {
     { name: "UFC", file: "Logo-UFC.png", url: "https://www.ufc.br", label: "Univ. Federal do Ceará" },
     { name: "INCT Bio", file: "Logo-INCT.png", url: "https://www.inct.cnpq.br/", label: "INCT Bio2" },
     { name: "CNPq", file: "Logo-CNPQ.png", url: "https://www.gov.br/cnpq", label: "Apoio Financeiro" },
-    { name: "NPDM", file: "Logo-LOE.JPEG", url: "https://npdm.ufc.br", label: "NPDM / LOE" },
+    { name: "NPDM", file: "Logo-LOE.jpeg", url: "https://npdm.ufc.br", label: "NPDM / LOE" },
     { name: "Fiocruz", file: "Logo-Fiocruz.png", url: "https://www.fiocruz.br", label: "Bio-Manguinhos" },
   ];
 
   return (
-    <footer className="bg-slate-900 text-slate-300 border-t border-slate-800">
+    // Trocado bg-slate-900 pelo Azul Escuro do projeto
+    <footer className="bg-[#014462] text-slate-300 border-t border-[#01354d]">
       <div className="max-w-[1440px] mx-auto px-6 py-12 md:py-16">
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           
           <div className="md:col-span-2 space-y-4">
-            {/* <h2 className="text-2xl font-bold text-white tracking-tight">BIONORDIS</h2> */}<p className="text-slate-400 text-sm leading-relaxed max-w-sm">
+            <p className="text-slate-300 text-sm leading-relaxed max-w-sm">
               A digital repository bridging the gap between biodiversity and drug discovery. 
               Developed at the Experimental Oncology Laboratory (LOE/UFC).
             </p>
             <div className="flex items-center gap-4 pt-2">
-                <a href="mailto:contact@bionordis.ufc.br" className="bg-slate-800 p-2 rounded-full hover:bg-emerald-600 hover:text-white transition-colors">
+                <a href="mailto:contact@bionordis.ufc.br" className="bg-white/10 p-2 rounded-full hover:bg-[#389F60] hover:text-white transition-colors">
                     <Mail size={18} />
                 </a>
-                <a href="#" className="bg-slate-800 p-2 rounded-full hover:bg-purple-600 hover:text-white transition-colors">
+                <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-white hover:text-[#014462] transition-colors">
                     <Github size={18} />
                 </a>
             </div>
@@ -35,18 +36,19 @@ export function Footer() {
           <div>
             <h3 className="font-bold text-white mb-4">Quick Links</h3>
             <ul className="space-y-3 text-sm">
-              <li><Link href="/" className="hover:text-emerald-400 transition-colors">Search Molecules</Link></li>
-              <li><Link href="/about" className="hover:text-emerald-400 transition-colors">About Project</Link></li>
-              <li><Link href="/contact" className="hover:text-emerald-400 transition-colors">Contact Us</Link></li>
-              <li><Link href="#" className="hover:text-emerald-400 transition-colors">How to Cite</Link></li>
+              <li><Link href="/" className="hover:text-[#389F60] transition-colors">Search Molecules</Link></li>
+              <li><Link href="/about" className="hover:text-[#389F60] transition-colors">About Project</Link></li>
+              <li><Link href="/contact" className="hover:text-[#389F60] transition-colors">Contact Us</Link></li>
+              <li><Link href="#" className="hover:text-[#389F60] transition-colors">How to Cite</Link></li>
             </ul>
           </div>
 
           <div>
             <h3 className="font-bold text-white mb-4">Location</h3>
-            <ul className="space-y-3 text-sm text-slate-400">
+            <ul className="space-y-3 text-sm text-slate-300">
               <li className="flex items-start gap-2">
-                <MapPin size={16} className="mt-1 text-emerald-500 shrink-0" />
+                {/* Trocado emerald-500 pelo Verde INCT */}
+                <MapPin size={16} className="mt-1 text-[#389F60] shrink-0" />
                 <span>
                   Rua Coronel Nunes de Melo, 1000 - Rodolfo Teófilo<br/>
                   Fortaleza - CE, Brazil
@@ -56,8 +58,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-800 pt-10 pb-6">
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest text-center mb-8">
+        <div className="border-t border-white/10 pt-10 pb-6">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest text-center mb-8">
                 Institutional Partners & Support
             </p>
             
@@ -70,8 +72,7 @@ export function Footer() {
                         rel="noopener noreferrer"
                         className="group flex flex-col items-center gap-3 transition-all hover:-translate-y-1"
                     >
-        
-                        <div className="h-16 w-32 bg-white rounded-lg flex items-center justify-center p-2 shadow-sm opacity-80 group-hover:opacity-100 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all duration-300">
+                        <div className="h-16 w-32 bg-white rounded-lg flex items-center justify-center p-2 shadow-sm opacity-90 group-hover:opacity-100 group-hover:shadow-[0_0_15px_rgba(56,159,96,0.4)] transition-all duration-300">
                            <Image 
                              src={`/logos/${partner.file}`} 
                              alt={partner.name}
@@ -81,22 +82,13 @@ export function Footer() {
                            />
                         </div>
                         
-                        <span className="text-[10px] uppercase font-bold text-slate-600 group-hover:text-emerald-400 transition-colors">
+                        <span className="text-[10px] uppercase font-bold text-slate-400 group-hover:text-[#389F60] transition-colors">
                             {partner.label}
                         </span>
                     </a>
                 ))}
             </div>
         </div>
-
-        {/* <div className="border-t border-slate-800 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} Bionordis / UFC. All rights reserved.</p>
-          <div className="flex gap-4 mt-4 md:mt-0">
-            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-white transition-colors">Terms of Use</Link>
-          </div>
-        </div> */}
-
       </div>
     </footer>
   );
