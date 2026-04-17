@@ -128,10 +128,10 @@ export default async function Home(props: {
             {/* SECTION 2: NUMBERS / IMPACT */}
             <section className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-5xl mx-auto w-full">
               {[
-                { label: "Cataloged Molecules", value: "+1,200", icon: <MoleculeIcon /> },
-                { label: "Botanical Families", value: "45", icon: <PlantIcon /> },
-                { label: "Biological Assays", value: "+5,000", icon: <MoleculeIcon /> },
-                { label: "Cell Lines", value: "12", icon: <PlantIcon /> },
+                { label: "Cataloged Molecules", value: "+2,000", icon: <MoleculeIcon /> },
+                { label: "Botanical Families", value: "79", icon: <PlantIcon /> },
+                { label: "Chemical Classes", value: "14", icon: <MoleculeIcon /> },
+                { label: "Biodiversity", value: "12", icon: <PlantIcon /> },
               ].map((stat, i) => (
                 <div key={i} className="bg-white rounded-3xl p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-shadow">
                   <div className="text-[#2e6655] mb-3">{stat.icon}</div>
