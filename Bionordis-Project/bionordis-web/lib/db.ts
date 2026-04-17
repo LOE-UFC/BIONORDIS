@@ -4,8 +4,27 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-
 export const query = (text: string, params?: any[]) => pool.query(text, params);
+
+function extrairTagsUnicas(rows: any[], coluna: string) {
+  const tags = new Set<string>();
+  
+  rows.forEach(row => {
+    const valor = row[coluna];
+    if (valor) {
+      // NOVA REGRA: Agora divide por Ponto e Vírgula (;), Vírgula (,), Barra (/) ou " e "
+      const partes = valor.split(/\s*[;,]\s*|\s+e\s+|\s*\/\s*/);
+      
+      partes.forEach((parte: string) => {
+        const tagLimpa = parte.trim();
+        if (tagLimpa) tags.add(tagLimpa);
+      });
+    }
+  });
+
+  // Converte o Set de volta para Array e ordena alfabeticamente
+  return Array.from(tags).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+}
 
 export async function getFilterOptions() {
   const familias = await query(
@@ -32,13 +51,14 @@ export async function getFilterOptions() {
     'SELECT DISTINCT biodiversidade FROM moleculas WHERE biodiversidade IS NOT NULL AND biodiversidade != \'\' ORDER BY biodiversidade ASC'
   );
 
+  // Aplica a função de limpeza em todos os filtros para garantir listas perfeitas na interface
   return {
-    familias: familias.rows.map(r => r.familia),
-    biomas: biomas.rows.map(r => r.bioma),
-    classes: classes.rows.map(r => r.classe),
-    subclasses: subclasses.rows.map(r => r.subclasse),
-    instituicoes: instituicoes.rows.map(r => r.instituicao),
-    biodiversidades: biodiversidades.rows.map(r => r.biodiversidade),
+    familias: extrairTagsUnicas(familias.rows, 'familia'),
+    biomas: extrairTagsUnicas(biomas.rows, 'bioma'),
+    classes: extrairTagsUnicas(classes.rows, 'classe'),
+    subclasses: extrairTagsUnicas(subclasses.rows, 'subclasse'),
+    instituicoes: extrairTagsUnicas(instituicoes.rows, 'instituicao'),
+    biodiversidades: extrairTagsUnicas(biodiversidades.rows, 'biodiversidade'),
   };
 }
 
@@ -53,6 +73,7 @@ export async function getMoleculasPaginadas(
   
   let whereClause = ` WHERE 1=1`;
 
+  // Busca na barra principal (Busca Livre)
   if (filtros.q) {
     whereClause += ` AND (
       nome ILIKE $${counter} OR 
@@ -72,12 +93,13 @@ export async function getMoleculasPaginadas(
     counter++;
   }
 
-  if (filtros.familia) { whereClause += ` AND familia = $${counter}`; params.push(filtros.familia); counter++; }
-  if (filtros.bioma) { whereClause += ` AND bioma = $${counter}`; params.push(filtros.bioma); counter++; }
-  if (filtros.classe) { whereClause += ` AND classe = $${counter}`; params.push(filtros.classe); counter++; }
-  if (filtros.subclasse) { whereClause += ` AND subclasse = $${counter}`; params.push(filtros.subclasse); counter++; }
-  if (filtros.instituicao) { whereClause += ` AND instituicao = $${counter}`; params.push(filtros.instituicao); counter++; }
-  if (filtros.biodiversidade) { whereClause += ` AND biodiversidade = $${counter}`; params.push(filtros.biodiversidade); counter++; }
+  // Busca nos Filtros Avançados (Agora usando ILIKE para encontrar partes da string)
+  if (filtros.familia) { whereClause += ` AND familia ILIKE $${counter}`; params.push(`%${filtros.familia}%`); counter++; }
+  if (filtros.bioma) { whereClause += ` AND bioma ILIKE $${counter}`; params.push(`%${filtros.bioma}%`); counter++; }
+  if (filtros.classe) { whereClause += ` AND classe ILIKE $${counter}`; params.push(`%${filtros.classe}%`); counter++; }
+  if (filtros.subclasse) { whereClause += ` AND subclasse ILIKE $${counter}`; params.push(`%${filtros.subclasse}%`); counter++; }
+  if (filtros.instituicao) { whereClause += ` AND instituicao ILIKE $${counter}`; params.push(`%${filtros.instituicao}%`); counter++; }
+  if (filtros.biodiversidade) { whereClause += ` AND biodiversidade ILIKE $${counter}`; params.push(`%${filtros.biodiversidade}%`); counter++; }
 
   const sqlDados = `
     SELECT * FROM moleculas 

@@ -71,93 +71,99 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
   };
 
   return (
-    <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 w-full shadow-sm">
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="text-slate-700 font-bold text-lg">Advanced Filters</h3>
-      </div>
+    // Container principal invisível que segura a caixa cinza e os botões
+    <div className="flex flex-col gap-6 w-full">
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-slate-500">Botanic Family</label>
-          <select 
-            className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
-            value={familia}
-            onChange={(e) => setFamilia(e.target.value)}
-          >
-            <option value="">All</option>
-            {opcoesFamilias.map((f, index) => (
-              <option key={index} value={f}>{f}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-slate-500">Biome</label>
-          <select 
-            className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
-            value={bioma}
-            onChange={(e) => setBioma(e.target.value)}
-          >
-            <option value="">All</option>
-            {opcoesBiomas.map((b, index) => (
-              <option key={index} value={b}>{b}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-slate-500">Class</label>
-          <select 
-            className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
-            value={classe}
-            onChange={(e) => setClasse(e.target.value)}
-          >
-            <option value="">All</option>
-            {opcoesClasse.map((b, index) => (
-              <option key={index} value={b}>{b}</option>
-            ))}
-          </select>
+      {/* Caixa cinza APENAS para o título e os campos de seleção */}
+      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-slate-700 font-bold text-lg">Advanced Filters</h3>
         </div>
         
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-slate-500">Subclass</label>
-          <select 
-            className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
-            value={subclasse}
-            onChange={(e) => setSubclasse(e.target.value)}
-          >
-            <option value="">All</option>
-            {opcoesSubclasse.map((s, i) => <option key={i} value={s}>{s}</option>)}
-          </select>
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-slate-500">Botanic Family</label>
+            <select 
+              className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
+              value={familia}
+              onChange={(e) => setFamilia(e.target.value)}
+            >
+              <option value="">All</option>
+              {opcoesFamilias.map((f, index) => (
+                <option key={index} value={f}>{f}</option>
+              ))}
+            </select>
+          </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-slate-500">Institution / Laboratory</label>
-          <select 
-            className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
-            value={instituicao}
-            onChange={(e) => setInstituicao(e.target.value)}
-          >
-            <option value="">All</option>
-            {opcoesInstituicao.map((inst, i) => <option key={i} value={inst}>{inst}</option>)}
-          </select>
-        </div>
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-slate-500">Biome</label>
+            <select 
+              className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
+              value={bioma}
+              onChange={(e) => setBioma(e.target.value)}
+            >
+              <option value="">All</option>
+              {opcoesBiomas.map((b, index) => (
+                <option key={index} value={b}>{b}</option>
+              ))}
+            </select>
+          </div>
 
-        <div className="space-y-2 md:col-span-2">
-          <label className="text-sm font-semibold text-slate-500">Biodiversity (Type)</label>
-          <select 
-            className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
-            value={biodiversidade}
-            onChange={(e) => setBiodiversidade(e.target.value)}
-          >
-            <option value="">All</option>
-            {opcoesBiodiversidade.map((bio, i) => <option key={i} value={bio}>{bio}</option>)}
-          </select>
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-slate-500">Class</label>
+            <select 
+              className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
+              value={classe}
+              onChange={(e) => setClasse(e.target.value)}
+            >
+              <option value="">All</option>
+              {opcoesClasse.map((b, index) => (
+                <option key={index} value={b}>{b}</option>
+              ))}
+            </select>
+          </div>
+          
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-slate-500">Subclass</label>
+            <select 
+              className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
+              value={subclasse}
+              onChange={(e) => setSubclasse(e.target.value)}
+            >
+              <option value="">All</option>
+              {opcoesSubclasse.map((s, i) => <option key={i} value={s}>{s}</option>)}
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-slate-500">Institution / Laboratory</label>
+            <select 
+              className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
+              value={instituicao}
+              onChange={(e) => setInstituicao(e.target.value)}
+            >
+              <option value="">All</option>
+              {opcoesInstituicao.map((inst, i) => <option key={i} value={inst}>{inst}</option>)}
+            </select>
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <label className="text-sm font-semibold text-slate-500">Biodiversity (Type)</label>
+            <select 
+              className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
+              value={biodiversidade}
+              onChange={(e) => setBiodiversidade(e.target.value)}
+            >
+              <option value="">All</option>
+              {opcoesBiodiversidade.map((bio, i) => <option key={i} value={bio}>{bio}</option>)}
+            </select>
+          </div>
         </div>
       </div>
       
-      <div className="flex flex-col md:flex-row gap-4 justify-end border-t border-slate-200 pt-6">
+      {/* Botões agora estão soltos do lado de fora, alinhados à direita */}
+      <div className="flex flex-col md:flex-row gap-4 justify-end">
         
         <button 
           onClick={handleSearchAll}

@@ -25,9 +25,10 @@ export default function SystemGuide() {
 
   return (
     <>
+      {/* Aqui adicionamos o w-fit e o self-start */}
       <button 
         onClick={openGuide}
-        className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-emerald-600 transition-colors bg-white/50 px-3 py-1.5 rounded-full border border-slate-200 hover:border-emerald-200"
+        className="w-fit self-start flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-emerald-600 transition-colors bg-white/50 px-3 py-1.5 rounded-full border border-slate-200 hover:border-emerald-200"
       >
         <HelpCircle size={16} />
         <span>How it works</span>

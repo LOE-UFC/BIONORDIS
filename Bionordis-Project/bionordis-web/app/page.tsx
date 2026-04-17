@@ -119,10 +119,10 @@ export default async function Home(props: {
                 Explore the digital repository of bioactive compounds, physicochemical properties from the Brazilian flora and more.
               </p>
 
-              {/* Search Bar - Agora integrada no layout sem a caixa escura */}
-              <div className="w-full max-w-3xl mx-auto shadow-xl hover:shadow-2xl transition-all duration-300 rounded-2xl bg-white">
-                <Search />
-              </div>
+            {/* Search Bar - Apenas a barra arredondada */}
+            <div className="w-full max-w-2xl mx-auto drop-shadow-lg hover:drop-shadow-2xl transition-all duration-300">
+              <Search />
+            </div>
             </section>
 
             {/* SECTION 2: NUMBERS / IMPACT */}

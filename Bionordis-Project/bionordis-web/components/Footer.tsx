@@ -5,7 +5,7 @@ import { Github, Mail, MapPin } from "lucide-react";
 export function Footer() { 
   const partners = [
     { name: "UFC", file: "Logo-UFC.png", url: "https://www.ufc.br", label: "Univ. Federal do Ceará" },
-    { name: "INCT Bio", file: "Logo-INCT.png", url: "https://www.inct.cnpq.br/", label: "INCT Bio2" },
+    { name: "INCT Bio", file: "Logo-INCT.png", url: "https://www.inctbio2.com.br/", label: "INCT Bio2" },
     { name: "CNPq", file: "Logo-CNPQ.png", url: "https://www.gov.br/cnpq", label: "Apoio Financeiro" },
     { name: "NPDM", file: "Logo-LOE.jpeg", url: "https://npdm.ufc.br", label: "NPDM / LOE" },
     { name: "Fiocruz", file: "Logo-Fiocruz.png", url: "https://www.fiocruz.br", label: "Bio-Manguinhos" },
