@@ -71,17 +71,13 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
   };
 
   return (
-    // Container principal invisível que segura a caixa cinza e os botões
     <div className="flex flex-col gap-6 w-full">
-      
-      {/* Caixa cinza APENAS para o título e os campos de seleção */}
       <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-slate-700 font-bold text-lg">Advanced Filters</h3>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-500">Botanic Family</label>
             <select 
@@ -91,7 +87,7 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
             >
               <option value="">All</option>
               {opcoesFamilias.map((f, index) => (
-                <option key={index} value={f}>{f}</option>
+                <option key={index} value={f} title={f}>{f}</option>
               ))}
             </select>
           </div>
@@ -105,7 +101,7 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
             >
               <option value="">All</option>
               {opcoesBiomas.map((b, index) => (
-                <option key={index} value={b}>{b}</option>
+                <option key={index} value={b} title={b}>{b}</option>
               ))}
             </select>
           </div>
@@ -119,7 +115,7 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
             >
               <option value="">All</option>
               {opcoesClasse.map((b, index) => (
-                <option key={index} value={b}>{b}</option>
+                <option key={index} value={b} title={b}>{b}</option>
               ))}
             </select>
           </div>
@@ -132,11 +128,11 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
               onChange={(e) => setSubclasse(e.target.value)}
             >
               <option value="">All</option>
-              {opcoesSubclasse.map((s, i) => <option key={i} value={s}>{s}</option>)}
+              {opcoesSubclasse.map((s, i) => <option key={i} value={s} title={s}>{s}</option>)}
             </select>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 md:col-span-2">
             <label className="text-sm font-semibold text-slate-500">Institution / Laboratory</label>
             <select 
               className="w-full h-12 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none transition-all cursor-pointer"
@@ -144,7 +140,11 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
               onChange={(e) => setInstituicao(e.target.value)}
             >
               <option value="">All</option>
-              {opcoesInstituicao.map((inst, i) => <option key={i} value={inst}>{inst}</option>)}
+              {opcoesInstituicao.map((inst, i) => (
+                <option key={i} value={inst} title={inst}>
+                  {inst}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -156,15 +156,13 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
               onChange={(e) => setBiodiversidade(e.target.value)}
             >
               <option value="">All</option>
-              {opcoesBiodiversidade.map((bio, i) => <option key={i} value={bio}>{bio}</option>)}
+              {opcoesBiodiversidade.map((bio, i) => <option key={i} value={bio} title={bio}>{bio}</option>)}
             </select>
           </div>
         </div>
       </div>
       
-      {/* Botões agora estão soltos do lado de fora, alinhados à direita */}
       <div className="flex flex-col md:flex-row gap-4 justify-end">
-        
         <button 
           onClick={handleSearchAll}
           className="bg-white border border-slate-300 hover:bg-slate-50 text-slate-600 font-bold py-3 px-6 rounded-full transition-all shadow-sm flex items-center justify-center gap-2"
@@ -181,7 +179,6 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
           </svg>
         </button>
-
       </div>
     </div>
   );

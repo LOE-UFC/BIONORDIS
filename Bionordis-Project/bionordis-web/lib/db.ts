@@ -13,7 +13,7 @@ function extrairTagsUnicas(rows: any[], coluna: string) {
     const valor = row[coluna];
     if (valor) {
       // NOVA REGRA: Agora divide por Ponto e Vírgula (;), Vírgula (,), Barra (/) ou " e "
-      const partes = valor.split(/\s*[;,]\s*|\s+e\s+|\s*\/\s*/);
+      const partes = valor.split(/\s*[;]\s*|\s*\/\s*/);
       
       partes.forEach((parte: string) => {
         const tagLimpa = parte.trim();
