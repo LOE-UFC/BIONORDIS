@@ -15,9 +15,9 @@ export default function LoginPage() {
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-100 py-4 sticky top-0 z-50">
         <div className="max-w-[1440px] mx-auto px-6 md:px-8 flex items-center justify-between">
           <Link href="/">
-            <div className="relative w-48 h-12 cursor-pointer">
+            <div className="relative w-64 h-16 cursor-pointer">
               <Image 
-                src="/logos/Logo-LOE.jpeg" 
+                src="/BIONORDIS-LOGO/2.png" 
                 alt="Bionordis Logo" 
                 width={1280}
                 height={376}

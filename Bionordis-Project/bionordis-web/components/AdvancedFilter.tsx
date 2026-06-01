@@ -164,13 +164,6 @@ export default function AdvancedFilter({ opcoesFamilias, opcoesBiomas, opcoesCla
       
       <div className="flex flex-col md:flex-row gap-4 justify-end">
         <button 
-          onClick={handleSearchAll}
-          className="bg-white border border-slate-300 hover:bg-slate-50 text-slate-600 font-bold py-3 px-6 rounded-full transition-all shadow-sm flex items-center justify-center gap-2"
-        >
-          <span>See all</span>
-        </button>
-
-        <button 
           onClick={handleSearch}
           className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center justify-center gap-2"
         >

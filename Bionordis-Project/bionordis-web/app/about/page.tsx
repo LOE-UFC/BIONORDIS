@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { Globe, Dna, Network, Building2, FlaskConical, Users } from "lucide-react";
+import '../home.css';
 
 // Ícone de Usuário padronizado com a Home
 const UserIcon = () => (
@@ -14,74 +15,68 @@ export default async function AboutPage() {
   const session = await auth();
 
   return (
-    // Fundo padronizado com a Home
-    <div className="min-h-screen bg-[#cfd4c1] text-slate-800 flex flex-col">
-      
-      {/* TOP HEADER - Exatamente igual ao da Home */}
-      <header className="border-b border-[#2e6655]/40 py-3 sticky top-0 bg-[#1c5563]/95 backdrop-blur-md z-50 shadow-md">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-8 flex items-center justify-between">
-          
-          <Link href="/" className="hover:opacity-80 transition-opacity">
-            <div className="bg-white px-3 py-1.5 rounded-xl shadow-sm">
-              <Image 
-                src="/logos/Logo-LOE.jpeg" 
-                alt="Bionordis Logo" 
-                width={128} 
-                height={38} 
-                className="h-8 w-auto object-contain" 
-                priority 
-              />
-            </div>
+    <div className="home-theme flex flex-col min-h-screen">
+      {/* Background elements */}
+      <div className="bg-wrapper">
+        <div className="blob blob-1"></div>
+        <div className="blob blob-2"></div>
+        <div className="grid-overlay"></div>
+      </div>
+
+      {/* HEADER */}
+      <header className="glass-header">
+        <div className="custom-container nav-wrapper">
+          <Link href="/" className="brand">
+            <Image
+              src="/BIONORDIS-LOGO/2.png"
+              alt="BIONORDIS Logo"
+              width={250}
+              height={70}
+              className="brand-logo-img px-2 py-1 rounded-lg"
+            />
           </Link>
-          
-          <div className="flex items-center gap-8">
-            <nav className="hidden md:flex gap-6 text-sm font-semibold text-[#cfd4c1]">
-              {/* O link "About" fica branco para indicar que estamos nesta página */}
-              <Link href="/about" className="text-white font-bold transition-colors">About the Project</Link>
-              <Link href="#" className="hover:text-white transition-colors">Team</Link>
-              <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
-            </nav>
-            
-            <div className="flex items-center gap-3 border-l border-[#2e6655] pl-6">
-              <Link href={session?.user ? "/profile" : "/login"} 
-                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all border 
-                  ${session?.user 
-                    ? "bg-[#cfd4c1] text-[#1c5563] border-transparent hover:bg-white" 
-                    : "bg-[#1c5563] text-[#cfd4c1] border-[#2e6655] hover:bg-[#2e6655] hover:text-white"}`}>
-                  <UserIcon />
-                  <span className="text-sm font-bold hidden sm:block">
-                    {session?.user ? session.user.name?.split(' ')[0] : "Restricted Access"}
-                  </span>
-              </Link>
-            </div>
-          </div>
+          <nav className="desktop-nav">
+            <Link href="/about" className="font-bold text-[#4fd1c5]">About</Link>
+            <Link href="#">Research</Link>
+            <Link href="#">Database</Link>
+            <Link href="#">Team</Link>
+            <Link href="/contact">Contact</Link>
+          </nav>
+          <Link href={session?.user ? "/profile" : "/login"}>
+            <button className="btn-auth">
+              {session?.user ? session.user.name?.split(' ')[0] : "Restricted Access"}
+            </button>
+          </Link>
         </div>
       </header>
 
-      <main className="flex-1 w-full max-w-4xl mx-auto px-6 py-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <main className="custom-container flex-1 py-16 animate-in slide-in-from-bottom-4 duration-700 relative z-10">
         
         {/* HERO SECTION */}
-        <section className="mb-16 space-y-6 text-center">
-            <h1 className="text-4xl md:text-5xl font-black text-[#1c5563] tracking-tight leading-tight">
-                Translational Biodiscovery <br/>
-                <span className="text-[#2e6655]">Refining Biomodels</span>
+        <section className="mt-16 mb-16 space-y-6 text-center">
+            <div className="badge inline-block mx-auto mb-6">
+                TRANSLATIONAL BIODISCOVERY
+            </div>
+            <h1 className="main-display text-4xl md:text-5xl">
+                Refining Biomodels
             </h1>
-            <p className="text-lg text-[#1c5563]/80 font-medium leading-relaxed max-w-2xl mx-auto">
+            <p className="hero-text max-w-2xl mx-auto mt-6">
                 Bionordis is the digital core of the <strong>INCT Bio²</strong> project, an initiative to position Brazilian research at the forefront of health innovation.
             </p>
         </section>
 
-        <div className="space-y-10">
+        <div className="space-y-10 max-w-5xl mx-auto">
             
             {/* CARD 1: ABOUT INCT */}
-            <div className="bg-white p-8 rounded-3xl border border-transparent shadow-sm hover:shadow-md transition-shadow space-y-6">
+            <div className="bg-white/80 backdrop-blur-md p-8 md:p-10 rounded-3xl border border-white/40 shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden space-y-6">
+                <div className="absolute top-0 right-0 w-2 h-full bg-[#4fd1c5]"></div>
                 <div className="flex items-center gap-4">
-                    <div className="bg-[#cfd4c1]/40 p-3 rounded-2xl text-[#2e6655]">
-                      <Network size={28} strokeWidth={2.5} />
+                    <div className="bg-[#edf3f2] p-4 rounded-2xl text-[#0f3f49]">
+                      <Network size={32} strokeWidth={2.5} />
                     </div>
-                    <h2 className="text-2xl font-bold text-[#1c5563] m-0">About INCT Bio²</h2>
+                    <h2 className="text-3xl font-bold text-[#0f3f49] m-0">About INCT Bio²</h2>
                 </div>
-                <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed">
+                <div className="prose prose-slate max-w-none text-[#1f2937] leading-relaxed text-lg">
                     <p>
                         Coordinated by <strong>Prof. Cláudia do Ó Pessoa</strong> (UFC/NPDM) in partnership with <strong>Prof. Maria Lucia Zaidan Dagli</strong> (USP), the <em>INCT Bio²: Translational Biodiscovery and Biomodels</em> establishes an innovative preclinical platform.
                     </p>
@@ -93,70 +88,71 @@ export default async function AboutPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* CARD 2: TECHNOLOGY */}
-                <div className="bg-white p-8 rounded-3xl border border-transparent shadow-sm hover:shadow-md transition-shadow space-y-6">
-                    <h3 className="text-xl font-bold text-[#1c5563] flex items-center gap-3">
-                        <div className="bg-[#cfd4c1]/40 p-2.5 rounded-xl text-[#2e6655]">
-                          <Dna size={24} />
+                <div className="bg-white/80 backdrop-blur-md p-8 rounded-3xl border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300 space-y-6">
+                    <h3 className="text-2xl font-bold text-[#0f3f49] flex items-center gap-3">
+                        <div className="bg-[#edf3f2] p-3 rounded-xl text-[#0f3f49]">
+                          <Dna size={28} />
                         </div>
                         Cutting-Edge Tech
                     </h3>
-                    <p className="text-slate-600 leading-relaxed text-sm">
+                    <p className="text-[#1f2937] leading-relaxed">
                         Bio² proposes the development of advanced oncological biomodels, including genetically edited <strong>Oncopigs</strong>, for evaluating anticancer drugs. The initiative integrates:
                     </p>
-                    <ul className="space-y-3 text-sm text-slate-600 font-medium">
-                        <li className="flex items-center gap-3 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                            <span className="w-2 h-2 bg-[#2e6655] rounded-full"></span> Gene Editing
+                    <ul className="space-y-4 text-sm text-[#1f2937] font-medium mt-6">
+                        <li className="flex items-center gap-3 bg-white/60 p-3 rounded-xl border border-white/40 shadow-sm">
+                            <span className="w-2.5 h-2.5 bg-[#4fd1c5] rounded-full shadow-[0_0_10px_#4fd1c5]"></span> Gene Editing
                         </li>
-                        <li className="flex items-center gap-3 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                            <span className="w-2 h-2 bg-[#2e6655] rounded-full"></span> 3D Cell Culture & Tumoroids
+                        <li className="flex items-center gap-3 bg-white/60 p-3 rounded-xl border border-white/40 shadow-sm">
+                            <span className="w-2.5 h-2.5 bg-[#4fd1c5] rounded-full shadow-[0_0_10px_#4fd1c5]"></span> 3D Cell Culture & Tumoroids
                         </li>
-                        <li className="flex items-center gap-3 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                            <span className="w-2 h-2 bg-[#2e6655] rounded-full"></span> Comparative Vet Oncology
+                        <li className="flex items-center gap-3 bg-white/60 p-3 rounded-xl border border-white/40 shadow-sm">
+                            <span className="w-2.5 h-2.5 bg-[#4fd1c5] rounded-full shadow-[0_0_10px_#4fd1c5]"></span> Comparative Vet Oncology
                         </li>
                     </ul>
                 </div>
 
                 {/* CARD 3: GLOBAL NETWORK */}
-                <div className="bg-white p-8 rounded-3xl border border-transparent shadow-sm hover:shadow-md transition-shadow space-y-6">
-                    <h3 className="text-xl font-bold text-[#1c5563] flex items-center gap-3">
-                        <div className="bg-[#cfd4c1]/40 p-2.5 rounded-xl text-[#2e6655]">
-                          <Globe size={24} />
+                <div className="bg-white/80 backdrop-blur-md p-8 rounded-3xl border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300 space-y-6 flex flex-col">
+                    <h3 className="text-2xl font-bold text-[#0f3f49] flex items-center gap-3">
+                        <div className="bg-[#edf3f2] p-3 rounded-xl text-[#0f3f49]">
+                          <Globe size={28} />
                         </div>
                         Global Network
                     </h3>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-[#cfd4c1]/20 p-5 rounded-2xl text-center border border-[#cfd4c1]/40">
-                            <span className="block text-3xl font-black text-[#1c5563]">64</span>
-                            <span className="text-xs text-[#2e6655] font-bold uppercase tracking-wider mt-1 block">Researchers</span>
+                    <div className="grid grid-cols-2 gap-5 flex-1 mt-4">
+                        <div className="bg-[#edf3f2]/60 p-6 rounded-2xl text-center border border-[#edf3f2] flex flex-col justify-center">
+                            <span className="block text-4xl font-black text-[#0f3f49]">64</span>
+                            <span className="text-sm text-[#0f3f49]/70 font-bold uppercase tracking-wider mt-2 block">Researchers</span>
                         </div>
-                        <div className="bg-[#cfd4c1]/20 p-5 rounded-2xl text-center border border-[#cfd4c1]/40">
-                            <span className="block text-3xl font-black text-[#1c5563]">14</span>
-                            <span className="text-xs text-[#2e6655] font-bold uppercase tracking-wider mt-1 block">National Inst.</span>
+                        <div className="bg-[#edf3f2]/60 p-6 rounded-2xl text-center border border-[#edf3f2] flex flex-col justify-center">
+                            <span className="block text-4xl font-black text-[#0f3f49]">14</span>
+                            <span className="text-sm text-[#0f3f49]/70 font-bold uppercase tracking-wider mt-2 block">National Inst.</span>
                         </div>
                     </div>
-                    <p className="mt-4 text-sm text-slate-500 leading-relaxed text-center">
+                    <p className="mt-4 text-sm text-[#1f2937]/80 leading-relaxed text-center font-medium">
                         Collaboration with 8 international institutions (USA, China, Uruguay, Switzerland, Portugal, Ireland) and Bio-Manguinhos (Fiocruz).
                     </p>
                 </div>
             </div>
 
             {/* BLOCKQUOTE / LOE SECTION */}
-            <div className="bg-white p-8 md:p-10 rounded-3xl border border-transparent shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex flex-col md:flex-row gap-8 items-center">
+            <div className="inct-panel mt-10 p-10 md:p-12 shadow-2xl">
+                <div className="panel-glow"></div>
+                <div className="flex flex-col md:flex-row gap-10 items-center relative z-10">
                     <div className="md:w-1/3 text-center md:text-left flex flex-col items-center md:items-start">
-                        <div className="bg-[#cfd4c1]/40 inline-flex p-5 rounded-2xl text-[#1c5563] mb-5">
-                            <FlaskConical size={40} strokeWidth={1.5} />
+                        <div className="bg-white/10 inline-flex p-6 rounded-2xl text-white mb-6 backdrop-blur-sm">
+                            <FlaskConical size={48} strokeWidth={1.5} />
                         </div>
-                        <h3 className="text-lg font-bold text-[#1c5563] leading-tight">Experimental Oncology Lab (LOE)</h3>
-                        <p className="text-sm font-medium text-slate-400 mt-2">Federal University of Ceará</p>
+                        <h3 className="text-2xl font-bold text-white leading-tight">Experimental Oncology Lab (LOE)</h3>
+                        <p className="text-sm font-medium text-white/70 mt-3 uppercase tracking-wider">Federal University of Ceará</p>
                     </div>
-                    <div className="md:w-2/3 prose prose-slate text-slate-600">
-                        <p>
+                    <div className="md:w-2/3 prose prose-slate text-white/90">
+                        <p className="text-lg leading-relaxed">
                             This achievement represents a major milestone for the <strong>Experimental Oncology Laboratory (LOE)</strong>. It is the result of the collective effort of researchers, students, and collaborators committed to excellence.
                         </p>
-                        <blockquote className="border-l-4 border-[#2e6655] pl-5 italic text-slate-600 bg-[#cfd4c1]/20 py-4 pr-4 rounded-r-xl mt-6">
+                        <blockquote className="border-l-4 border-[#4fd1c5] pl-6 italic text-white bg-white/5 py-6 pr-6 rounded-r-2xl mt-8 shadow-inner">
                             "Our goal is to promote precision medicine and generate real impact on society."
-                            <span className="block text-sm font-bold text-[#1c5563] mt-3 not-italic">— Prof. Cláudia do Ó Pessoa</span>
+                            <span className="block text-sm font-bold text-[#4fd1c5] mt-4 not-italic uppercase tracking-widest">— Prof. Cláudia do Ó Pessoa</span>
                         </blockquote>
                     </div>
                 </div>
@@ -164,6 +160,14 @@ export default async function AboutPage() {
 
         </div>
       </main>
+
+      {/* FOOTER */}
+      <footer className="modern-footer mt-auto relative z-10">
+        <div className="custom-container footer-content">
+          <span className="copy">© 2026 Bionordis Platform</span>
+          <div className="footer-line"></div>
+        </div>
+      </footer>
     </div>
   );
 }

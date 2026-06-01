@@ -59,11 +59,11 @@ export default async function Home(props: {
         <div className="custom-container nav-wrapper">
           <Link href="/" className="brand">
             <Image
-              src="/logos/Logo-LOE.jpeg"
+              src="/BIONORDIS-LOGO/2.png"
               alt="BIONORDIS Logo"
-              width={128}
-              height={38}
-              className="brand-logo-img bg-white px-2 py-1 rounded-lg"
+              width={250}
+              height={70}
+              className="brand-logo-img px-2 py-1 rounded-lg"
             />
           </Link>
           <nav className="desktop-nav">

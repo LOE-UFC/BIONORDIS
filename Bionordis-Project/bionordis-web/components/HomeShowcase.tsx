@@ -30,11 +30,7 @@ export default function HomeShowcase() {
         >
           {/* SLIDE 1 */}
           <div className="showcase-card">
-            {/* Using Next.js Image or standard img. Standard img is fine for demo as per user's code, but let's use div style or next/image */}
-            {/* The user had src="img/molecules.jpg" but wait, they don't have it in their public folder. Let's look at their public folder. */}
-            {/* public/ file.svg, globe.svg, logo.jpg, BIONORDIS-LOGO/1.png... */}
-            {/* I will use empty divs with fallback background for now if they don't have the images, or just img tags that might be missing */}
-            <div className="absolute inset-0 bg-slate-800"></div>
+            <img src="/molecules.jpg" alt="Database" />
             <div className="showcase-overlay"></div>
             <div className="showcase-content">
               <span className="showcase-tag">DATABASE</span>
@@ -45,7 +41,7 @@ export default function HomeShowcase() {
 
           {/* SLIDE 2 */}
           <div className="showcase-card">
-            <div className="absolute inset-0 bg-emerald-800"></div>
+            <img src="/forest.avif" alt="Biodiversity" />
             <div className="showcase-overlay"></div>
             <div className="showcase-content">
               <span className="showcase-tag">BIODIVERSITY</span>
@@ -56,7 +52,7 @@ export default function HomeShowcase() {
 
           {/* SLIDE 3 */}
           <div className="showcase-card">
-            <div className="absolute inset-0 bg-sky-800"></div>
+            <img src="/chemical.jpg" alt="Chemistry" />
             <div className="showcase-overlay"></div>
             <div className="showcase-content">
               <span className="showcase-tag">CHEMISTRY</span>
@@ -67,7 +63,7 @@ export default function HomeShowcase() {
 
           {/* SLIDE 4 */}
           <div className="showcase-card">
-            <div className="absolute inset-0 bg-indigo-800"></div>
+            <img src="/bio.jpg" alt="Network" />
             <div className="showcase-overlay"></div>
             <div className="showcase-content">
               <span className="showcase-tag">NETWORK</span>

@@ -15,7 +15,7 @@ export default async function ProfilePage() {
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-100 py-4 sticky top-0 z-50">
         <div className="max-w-[1440px] mx-auto px-6 md:px-8 flex items-center justify-between">
           <Link href="/">
-             <Image src="/BIONORDIS-LOGO/2.png" alt="Logo" width={160} height={50} className="h-10 w-auto cursor-pointer" />
+             <Image src="/BIONORDIS-LOGO/2.png" alt="Logo" width={200} height={65} className="h-14 w-auto cursor-pointer" />
           </Link>
           <Link href="/" className="text-sm text-slate-500 hover:text-emerald-600">Back to Home Page</Link>
         </div>

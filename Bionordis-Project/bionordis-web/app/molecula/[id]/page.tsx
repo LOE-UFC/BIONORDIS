@@ -67,11 +67,11 @@ export default async function MoleculaDetails(props: {
           <div className="flex items-center gap-3">
             <Link href="/">
               <Image
-                src="/logos/Logo-LOE.jpeg"
+                src="/BIONORDIS-LOGO/2.png"
                 alt="Bionordis Logo"
                 width={1280}
                 height={376}
-                className="h-12 w-auto md:h-16 object-contain cursor-pointer"
+                className="h-16 w-auto md:h-20 object-contain cursor-pointer"
                 priority
               />
             </Link>
