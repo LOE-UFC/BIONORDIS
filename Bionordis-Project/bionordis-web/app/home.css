@@ -216,6 +216,10 @@
   color: var(--primary);
 }
 
+.gap {
+    margin-top: 5rem;
+}
+
 .main-display {
   margin-bottom: 10px;
   font-size: 7rem;

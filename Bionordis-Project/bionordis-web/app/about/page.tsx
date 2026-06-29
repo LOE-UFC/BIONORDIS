@@ -54,7 +54,7 @@ export default async function AboutPage() {
         
         {/* HERO SECTION */}
         <section className="mt-16 mb-16 space-y-6 text-center">
-            <div className="badge inline-block mx-auto mb-6">
+            <div className="badge inline-block mx-auto mb-6 gap">
                 TRANSLATIONAL BIODISCOVERY
             </div>
             <h1 className="main-display text-4xl md:text-5xl">
